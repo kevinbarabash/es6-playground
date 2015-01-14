@@ -33,7 +33,7 @@
             padding: 0 50px;
         }
       
-        h1 {
+        h1, h2, h3 {
             font-family: sans-serif;
         }
     </style>
@@ -81,7 +81,7 @@
         editor.setValue(code);
         output.setValue(to5.transform(code).code);
     };
-    xhr.open("GET", "../examples/01_arrow.js", true);
+    xhr.open("GET", "../examples/00_readable.js", true);
     xhr.send();
 
     editor.getSession().on("changeAnnotation", function(){
