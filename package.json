@@ -1,0 +1,25 @@
+{
+  "name": "es6-playground",
+  "version": "0.0.1",
+  "description": "Run and edit various examples of new languages features in ES6.",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kevinb7/es6-playground"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kevinb7/es6-playground/issues"
+  },
+  "homepage": "https://github.com/kevinb7/es6-playground",
+  "dependencies": {
+    "6to5": "^2.12.0"
+  }
+}
