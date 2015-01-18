@@ -1,21 +1,5 @@
-// source: https://6to5.org/docs/tour/#arrows
+var a = [1,2,3,4,5,6];
+console.log(a);
 
-// Expression bodies
-var odds = evens.map(v => v + 1);
-var nums = evens.map((v, i) => v + i);
-
-// Statement bodies
-nums.forEach(v => {
-    if (v % 5 === 0)
-        fives.push(v);
-});
-
-// Lexical this
-var bob = {
-    _name: "Bob",
-    _friends: [],
-    printFriends() {
-        this._friends.forEach(f =>
-            console.log(this._name + " knows " + f));
-    }
-};
+var b = a.filter(i => i % 2);
+console.log(b);

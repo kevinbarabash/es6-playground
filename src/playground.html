@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <title>ES6 Playground</title>
     <link rel="stylesheet" href="style.css"/>
+    <!--<link rel="stylesheet" href="../external/consemu/dist/consemu.css"/>-->
     <script src="../bower_components/dat-gui/build/dat.gui.min.js"></script>
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
 
@@ -15,22 +17,31 @@
     
     <div id="containers">
         <div id="es6-container" class="container">
-            <select id="example-select">
-                <option>Classes</option>
-                <option>Backbone (MVC)</option>
-                <option>Rest/Spread</option>
-                <option>Destructuring</option>
-            </select>
-            <div id="source" class="editor"></div>
+            <!--<div>-->
+                <select id="example-select">
+                    <option>Classes</option>
+                    <option>Backbone (MVC)</option>
+                    <option>Rest/Spread</option>
+                    <option>Destructuring</option>
+                </select>
+            <!--</div>-->
+            <div id="left">
+                <div id="source" class="editor"></div>
+            </div>
         </div>
 
         <div id="es5-container" class="container">
-            <select id="output-select">
-                <option>compiled code</option>
-                <option>console</option>
-            </select>
-            <div id="output" class="editor"></div>
-
+            <div>
+                <select id="output-select">
+                    <option>compiled code</option>
+                    <option>console</option>
+                </select>
+                <!-- TODO: add console controls -->
+            </div>
+            <div id="right">
+                <!--<div id="output" class="editor" style="display:none;"></div>-->
+                <div id="console" class="editor consemu" style="display: block;"></div>
+            </div>
         </div>
     </div>
    
@@ -45,70 +56,5 @@
 <script src="../node_modules/6to5/browser.js"></script>
 <script src="../node_modules/6to5/runtime.js"></script>
 <script src="../ace/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-<script>
-
-    var fontSize = 14;
-
-    var editor = ace.edit("source");
-
-    editor.setTheme("ace/theme/chrome");
-    editor.setHighlightActiveLine(false);
-    editor.getSession().setMode("ace/mode/javascript");
-    editor.setFontSize(fontSize);
-
-    var output = ace.edit("output");
-
-    output.setTheme("ace/theme/chrome");
-    output.setHighlightActiveLine(false);
-    output.getSession().setMode("ace/mode/javascript");
-    output.getSession().setUseWorker(false);
-    output.setReadOnly(true);
-    output.setFontSize(fontSize);
-
-    // TODO: add checkboxes to adjust these options
-    // TODO: create a virtual console that intercepts console.log() messages
-    // TODO: add a console window and allow users to switch between ES5 and console
-    var options = { loose: "classes", runtime: true };
-    
-    var xhr = new XMLHttpRequest();
-    // TODO: error checking
-    xhr.onload = function () {
-        var code = xhr.responseText;
-        editor.setValue(code, 1);
-        output.setValue(to5.transform(code, options).code, 1);
-    };
-    xhr.open("GET", "../examples/00_readable.js", true);
-    xhr.send();
-
-    editor.getSession().on("changeAnnotation", function(){
-
-        var annot = editor.getSession().getAnnotations();
-        var noErrors = annot.every(function(annot) {
-            return annot.type !== "error";
-        });
-        
-        if (noErrors) {
-            var code = editor.getSession().getValue();
-            output.setValue(to5.transform(code, options).code, 1);
-        }
-    });
-
-
-    var gui = new dat.GUI();
-    
-    var settings = {};
-    Object.defineProperty(settings, "fontSize", {
-        get: function () {
-            return fontSize;
-        },
-        set: function (value) {
-            fontSize = value;
-            editor.setFontSize(value);
-            output.setFontSize(value);
-        }
-    });
-    
-    
-    gui.add(settings, "fontSize", 10, 40).step(1);
-    
-</script>
+<script src="../external/consemu/dist/consemu.js"></script>
+<script src="playground.js"></script>

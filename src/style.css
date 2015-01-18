@@ -6,17 +6,31 @@
 
 #es6-container {
     flex-grow: 1;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
     border-right: solid 3px transparent;
 }
 
 #es5-container {
     flex-grow: 1;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
     border-left: solid 5px transparent;
 }
 
-#source, #output {
+.container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#left, #right {
+    display: flex;
     flex-grow: 1;
     flex-shrink: 1;
+    flex-direction: row;
     margin-bottom: 20px;
     border: solid 1px #999;
 }
@@ -39,24 +53,23 @@
     flex-direction: row;
 }
 
-.container {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
+table {
+    height: 100%;
+    width: 100%;
 }
 
-.container select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    padding: 0 0.25em;
-    font-size: 24px;
-    width: 240px;
-}
+/*.container select {*/
+    /*-webkit-appearance: none;*/
+    /*-moz-appearance: none;*/
+    /*appearance: none;*/
+    /*padding: 0 0.25em;*/
+    /*font-size: 24px;*/
+    /*width: 240px;*/
+/*}*/
 
-.container select:focus {
-    outline: none;
-}
+/*.container select:focus {*/
+    /*outline: none;*/
+/*}*/
 
 h1, h2, h3 {
     font-family: sans-serif;
