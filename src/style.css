@@ -1,0 +1,79 @@
+.container {
+    /*width: 50%;*/
+    float: left;
+    box-sizing: border-box;
+}
+
+#es6-container {
+    flex-grow: 1;
+    border-right: solid 3px transparent;
+}
+
+#es5-container {
+    flex-grow: 1;
+    border-left: solid 5px transparent;
+}
+
+#source, #output {
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin-bottom: 20px;
+    border: solid 1px #999;
+}
+
+.editor {
+    margin-top: 10px;
+}
+
+.wrapper {
+    height: 100%;
+    margin: auto;
+    padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+#containers {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+}
+
+.container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.container select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 0 0.25em;
+    font-size: 24px;
+    width: 240px;
+}
+
+.container select:focus {
+    outline: none;
+}
+
+h1, h2, h3 {
+    font-family: sans-serif;
+}
+
+#title {
+    font-family: sans-serif;
+    margin-top: 0.5em;
+    margin-bottom: 0.25em;
+    font-size: 36px;
+    color: #2e2e2c;
+}
+
+body {
+    margin: 0;
+}
+
+html, body {
+    height: 100%;
+}
