@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="../external/consemu/dist/consemu.css"/>
+    <script src="../node_modules/6to5/browser.js"></script>
+    <script src="../node_modules/6to5/runtime.js"></script>
+    <script src="../node_modules/6to5/browser-polyfill.js"></script>
+    <script src="../ace/src-min-noconflict/ace.js"></script>
+    <script src="../external/consemu/dist/consemu.js"></script>
+    <script src="../bower_components/dat-gui/build/dat.gui.min.js"></script>
+    <script src="esprima.js"></script>
+    <script src="escope.js"></script>
+    <script src="index.js" async></script>
+</head>
+<body>
+
+<div id="wrapper">
+    <div id="title" class="header">
+        <b>ES6</b> playground
+    </div>
+
+    <div id="container">
+
+        <div id="left">
+            <div class="header">
+                <select>
+                    <option>arrow functions</option>
+                    <option>classes</option>
+                    <option>default parameters</option>
+                    <option>rest parameters</option>
+                    <option>destructuring</option>
+                    
+                </select>
+            </div>
+            <div class="content">
+                <div id="editor"></div>
+            </div>
+        </div>
+        
+        <div id="right">
+            <div class="header">
+                <select id="leftSelector">
+                    <option value="console">console</option>
+                    <option value="output">compiled code</option>
+                    <option value="document">document</option>
+                </select>
+            </div>
+            <div class="content">
+                <div id="console" class="consemu"></div>
+                <div id="output" style="display:none;"></div>
+                <div id="document" style="display:none;">
+                    <h1>Hello, world</h1>
+                    <h2>adsf</h2>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+</div>
+
+</body>
+</html>
