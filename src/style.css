@@ -52,3 +52,7 @@ h1 {
     font-family: sans-serif;
     margin-bottom: 6px;
 }
+
+.ace_comment {
+    color: whitesmoke !important;
+}

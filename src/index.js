@@ -20,17 +20,17 @@ var consoleContainer = document.getElementById("console");
 var consoleEmulator = new ConsoleEmulator(consoleContainer);
 consoleEmulator.setFontSize(fontSize);
 
+
 var canvas = document.querySelector("canvas");
 canvas.width = consoleContainer.offsetWidth;
 canvas.height = consoleContainer.offsetHeight;
 var ctx = canvas.getContext("2d");
-ctx.fillStyle = "red";
-ctx.fillRect(100,100,100,100);
+
 
 var listenerObjects = [];
-var addEventListener = canvas.addEventListener.bind(canvas);
+var _addListener = canvas.addEventListener.bind(canvas);
 canvas.addEventListener = function(type, listener) {
-    addEventListener(type, listener);
+    _addListener(type, listener);
     listenerObjects.push({ type: type, listener: listener });
 };
 
@@ -58,39 +58,101 @@ leftSelector.addEventListener("change", function (e) {
 
 
 // TODO: add checkboxes to adjust these options
-// TODO: create a virtual console that intercepts console.log() messages
-// TODO: add a console window and allow users to switch between ES5 and console
 var options = { loose: "classes", runtime: true };
 
 
-var xhr = new XMLHttpRequest();
-xhr.onload = function () {
-    var code = xhr.responseText;
-    editor.setValue(code, 1);
-    output.setValue(to5.transform(code, options).code, 1);
-};
-xhr.open("GET", "../examples/01_arrow.js", true);
-xhr.send();
+var examples = [ 
+    "templating",
+    "arrow",
+    "let_const",
+    "------",
+    "classes", 
+    "inheritance", 
+    "event_handlers",
+    "------",
+    "destructuring",
+    "rest",
+    "spread",
+    "------",
+    "iterators",
+    "promises",
+    "generators"
+];
 
-editor.getSession().on("changeAnnotation", function() {
+var exampleSelector = document.querySelector("#exampleSelector");
 
-    var annot = editor.getSession().getAnnotations();
-    var noErrors = annot.every(function(annot) {
-        return annot.type !== "error";
-    });
+examples.forEach(function (name) {
+    var option = document.createElement("option");
+    option.appendChild(document.createTextNode(name));
+    exampleSelector.appendChild(option);
+});
 
-    if (noErrors) {
-        listenerObjects.forEach(function (obj) {
-            canvas.removeEventListener(obj.type, obj.listener); 
-        });
-        listenerObjects = [];
-        
+var cache = {};
+
+function loadExample(name) {
+    if (cache[name]) {
+        var code = cache[name];
+        editor.setValue(code, 1);
+        output.setValue(to5.transform(code, options).code, 1);
+    } else {
+        var path = "../examples/" + name + ".js";
+
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            var code = xhr.responseText;
+            cache[name] = code;
+            editor.setValue(code, 1);
+            output.setValue(to5.transform(code, options).code, 1);
+        };
+        xhr.open("GET", path, true);
+        xhr.send();
+    }
+}
+
+loadExample(examples[0]);
+
+exampleSelector.addEventListener("change", function (e) {
+    var value = exampleSelector.value;
+
+    if (value[0] !== "-") {
+        loadExample(value);
+    } else {
+        return false;
+    }
+});
+
+//editor.getSession().on("changeAnnotation", function() {
+//
+//    var annot = editor.getSession().getAnnotations();
+//    var noErrors = annot.every(function(annot) {
+//        return annot.type !== "error";
+//    });
+//
+//    if (noErrors) {
+//        
+//        
+//    }
+//});
+
+editor.getSession().on("change", function () {
+    try {
         var code = editor.getSession().getValue();
         var transformedCode = to5.transform(code, options).code;
         output.setValue(transformedCode, 1);
 
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        listenerObjects.forEach(function (obj) {
+            canvas.removeEventListener(obj.type, obj.listener);
+        });
+        listenerObjects = [];
+
         consoleEmulator.clear();
         consoleEmulator.runCode(transformedCode);
+    } catch (e) {
+        consoleEmulator.clear();
+        // TODO: show error message in console
+        console.log(e.message);
     }
 });
 
