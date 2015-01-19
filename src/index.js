@@ -27,6 +27,13 @@ var ctx = canvas.getContext("2d");
 ctx.fillStyle = "red";
 ctx.fillRect(100,100,100,100);
 
+var listenerObjects = [];
+var addEventListener = canvas.addEventListener.bind(canvas);
+canvas.addEventListener = function(type, listener) {
+    addEventListener(type, listener);
+    listenerObjects.push({ type: type, listener: listener });
+};
+
 // TODO start using jQuery
 var leftSelector = document.querySelector("#leftSelector");
 leftSelector.addEventListener("change", function (e) {
@@ -73,6 +80,11 @@ editor.getSession().on("changeAnnotation", function() {
     });
 
     if (noErrors) {
+        listenerObjects.forEach(function (obj) {
+            canvas.removeEventListener(obj.type, obj.listener); 
+        });
+        listenerObjects = [];
+        
         var code = editor.getSession().getValue();
         var transformedCode = to5.transform(code, options).code;
         output.setValue(transformedCode, 1);

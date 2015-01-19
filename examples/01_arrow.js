@@ -17,3 +17,8 @@ ${content}
 
 console.log(html);
 
+canvas.addEventListener("click", e => {
+    var x = e.pageX - canvas.offsetLeft;
+    var y = e.pageY - canvas.offsetTop;
+    ctx.fillRect(x,y,10,10);
+});
