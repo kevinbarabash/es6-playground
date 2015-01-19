@@ -16,9 +16,16 @@ output.setFontSize(fontSize);
 
 
 // TODO: make this more like ace where you pass in the id
-var consoleEmulator = new ConsoleEmulator(document.getElementById("console"));
+var consoleContainer = document.getElementById("console");
+var consoleEmulator = new ConsoleEmulator(consoleContainer);
 consoleEmulator.setFontSize(fontSize);
 
+var canvas = document.querySelector("canvas");
+canvas.width = consoleContainer.offsetWidth;
+canvas.height = consoleContainer.offsetHeight;
+var ctx = canvas.getContext("2d");
+ctx.fillStyle = "red";
+ctx.fillRect(100,100,100,100);
 
 // TODO start using jQuery
 var leftSelector = document.querySelector("#leftSelector");
@@ -27,16 +34,16 @@ leftSelector.addEventListener("change", function (e) {
     
     var console = document.querySelector("#console");
     var output = document.querySelector("#output");
-    var doc = document.querySelector("#document");
+    var canvasElement = document.querySelector("#canvas");
 
-    [console, output, doc].forEach(function (div) {
+    [console, output, canvasElement].forEach(function (div) {
         div.style.display = "none";
     });
     
     var dict = {
         console: console,
         output: output,
-        document: doc
+        canvas: canvasElement
     };
     
     dict[value].style.display = "block";
@@ -67,34 +74,9 @@ editor.getSession().on("changeAnnotation", function() {
 
     if (noErrors) {
         var code = editor.getSession().getValue();
-
-        var ast = esprima.parse(code);
-        var scopeManager = escope.analyze(ast);
-        scopeManager.attach();
-
-        var context = {};
-        scopeManager.globalScope.variables.forEach(function (v) {
-            context[v.name] = undefined;
-        });
-
-        var body = document.querySelector("#document");
-        var _document = {
-            body: body,
-            querySelector: body.querySelector.bind(body),
-            querySelectorAll: body.querySelectorAll.bind(body),
-            createElement: document.createElement.bind(document)
-        };
-
-        Object.defineProperty(context, "_document", {
-            get: function () {
-                return _document;
-            }
-        });
-
         var transformedCode = to5.transform(code, options).code;
         output.setValue(transformedCode, 1);
 
-        consoleEmulator.setContext(context);
         consoleEmulator.clear();
         consoleEmulator.runCode(transformedCode);
     }
