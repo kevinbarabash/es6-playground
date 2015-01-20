@@ -84,7 +84,13 @@ var examples = [
     "classes", 
     "inheritance", 
     "event_handlers",
+    // TODO: jquery example
     // TODO: rxjs example
+    "------",
+    "modules_1",
+    "modules_2",
+    "modules_3",
+    "modules_4",
     "------",
     "generator_basics_1",
     "generator_basics_2",
@@ -99,6 +105,26 @@ var examples = [
     "currying"
 ];
 
+var defaultOptions = {
+    split: 'left',   // favor left size 66% to 33%
+    evaluate: true,
+    update: true
+};
+
+var exampleOptions = {
+    modules_1: { split: 'even', evaluate: false },
+    modules_2: { split: 'even', evaluate: false },
+    modules_3: { split: 'even', evaluate: false },
+    modules_4: { split: 'even', evaluate: false },
+    promises: { update: false },
+    generators_and_promises: { update: false }
+};
+
+// destructuring would be useful
+var evaluate = defaultOptions.evaluate;
+var update = defaultOptions.update;
+var split = defaultOptions.split;
+
 var exampleSelector = document.querySelector("#exampleSelector");
 
 examples.forEach(function (name) {
@@ -112,14 +138,56 @@ examples.forEach(function (name) {
 
 var cache = {};
 
+var runButton = document.getElementById("runButton");
+runButton.addEventListener("click", function () {
+    runCode();
+});
+
+var leftColumn = document.querySelector("#left");
+var rightColumn = document.querySelector("#right");
+
 // TODO: dry this code out
 function loadExample(name) {
+    evaluate = defaultOptions.evaluate;
+    update = defaultOptions.update;
+    split = defaultOptions.split;
+    
+    var options = exampleOptions[name];
+    if (options) {
+        if (options.hasOwnProperty("evaluate")) {
+            evaluate = options.evaluate;
+        }
+        if (options.hasOwnProperty("update")) {
+            update = options.update;
+        }
+        if (options.hasOwnProperty("split")) {
+            split = options.split;
+        }
+    }
+
+    if (evaluate && !update) {
+        runButton.style.display = "inline";
+    } else {
+        runButton.style.display = "none";
+    }
+    
+    if (split === "left") {
+        leftColumn.style.width = "66%";
+        rightColumn.style.width = "33%";
+    } else if (split === "even") {
+        leftColumn.style.width = "50%";
+        rightColumn.style.width = "50%";
+    }
+    
     if (cache[name]) {
         var code = cache[name];
         editor.setValue(code, 1);
         output.setValue(to5.transform(code, options).code, 1);
         editor.getSession().setScrollTop(0);
         output.getSession().setScrollTop(0);
+        if (evaluate && !update) {
+            runCode();
+        }
     } else {
         var path = "../examples/" + name + ".js";
 
@@ -131,6 +199,9 @@ function loadExample(name) {
             output.setValue(to5.transform(code, options).code, 1);
             editor.getSession().setScrollTop(0);
             output.getSession().setScrollTop(0);
+            if (evaluate && !update) {
+                runCode();
+            }
         };
         xhr.open("GET", path, true);
         xhr.send();
@@ -149,19 +220,6 @@ exampleSelector.addEventListener("change", function (e) {
         return false;
     }
 });
-
-//editor.getSession().on("changeAnnotation", function() {
-//
-//    var annot = editor.getSession().getAnnotations();
-//    var noErrors = annot.every(function(annot) {
-//        return annot.type !== "error";
-//    });
-//
-//    if (noErrors) {
-//        
-//        
-//    }
-//});
 
 var runCode = function () {
     try {
@@ -187,7 +245,7 @@ var runCode = function () {
 };
 
 editor.getSession().on("change", function () {
-    if (autorun) {
+    if (evaluate && update) {
         runCode();
     }
 });
@@ -207,18 +265,6 @@ Object.defineProperty(settings, "fontSize", {
     }
 });
 
-Object.defineProperty(settings, "autorun", {
-    get: function () {
-        return autorun;
-    },
-    set: function (value) {
-        autorun = value;
-        localStorage.autorun = value;
-        if (autorun) {
-            runCode();
-        }
-    }
-});
 
 var gui = new dat.GUI();
 gui.close();
