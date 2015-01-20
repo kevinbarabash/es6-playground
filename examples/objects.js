@@ -4,7 +4,8 @@ var obj = {
     x: 5,
     [propName]: 10, 
     scale(k) {
-        [this.x, this.y] = [k * this.x, k * this.y];
+        this.x *= k;
+        this.y *= k;
     },
     get sum() {
         return this.x + this.y;

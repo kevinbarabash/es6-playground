@@ -27,3 +27,16 @@ let selectElements = document.querySelectorAll("select");
 for (let { id } of selectElements) {
     console.log(`elem.id = ${id}`);
 }
+
+// for-of doesn't work with objects
+// we could monkey patch using Object.keys but it's not part of 
+// the standard
+// see https://esdiscuss.org/topic/es6-iteration-over-object-values
+try {
+    var obj = { x:5, y:10 };
+    for (let entry of obj) {
+        // do something with entry
+    }    
+} catch (err) {
+    console.log(err);
+}
