@@ -1,10 +1,8 @@
 class Square {
     constructor(x = 0, y = 0, size = 50) {
-        this.x = x;
-        this.y = y;
+        [this.x, this.y] = [x, y];
         this.size = size;
     }
-
     draw() {
         ctx.fillRect(this.x, this.y, this.size, this.size);
     }
@@ -15,7 +13,6 @@ class ColorfulSquare extends Square {
         super(x, y, size);
         this.color = color;
     }
-
     draw() {
         ctx.fillStyle = this.color;
         super.draw();

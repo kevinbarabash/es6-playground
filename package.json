@@ -24,6 +24,7 @@
     "escodegen": "^1.6.0",
     "escope": "^2.0.3",
     "esprima-fb": "^10001.1.0-dev-harmony-fb",
-    "estraverse": "^1.9.1"
+    "estraverse": "^1.9.1",
+    "q": "^1.1.2"
   }
 }

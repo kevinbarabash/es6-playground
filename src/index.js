@@ -1,4 +1,13 @@
 var fontSize = parseInt(localStorage.fontSize || 14);
+var example = localStorage.example || "templating";
+var autorun = localStorage.autorun || true;
+
+if (autorun === "true") {
+    autorun = true;
+} else if (autorun === "false") {
+    autorun = false;
+}
+
 
 var editor = ace.edit("editor");
 editor.setTheme("ace/theme/chrome");
@@ -58,25 +67,31 @@ leftSelector.addEventListener("change", function (e) {
 
 
 // TODO: add checkboxes to adjust these options
-var options = { loose: "classes", runtime: true };
+var options = { loose: "classes", runtime: true, modules: "common" };
 
+
+// TODO: add configuartions to the examples for what it should show firts, whether it should evaluate or not
 
 var examples = [ 
     "templating",
     "arrow",
     "let_const",
     "------",
-    "classes", 
-    "inheritance", 
-    "event_handlers",
-    "------",
     "destructuring",
     "rest",
     "spread",
     "------",
+    "classes", 
+    "inheritance", 
+    "event_handlers",
+    // TODO: rxjs example
+    "------",
+    "generator_basics_1",
+    "generator_basics_2",
     "iterators",
+    "iterators_from_generators",
     "promises",
-    "generators"
+    "generators_and_promises"
 ];
 
 var exampleSelector = document.querySelector("#exampleSelector");
@@ -84,16 +99,22 @@ var exampleSelector = document.querySelector("#exampleSelector");
 examples.forEach(function (name) {
     var option = document.createElement("option");
     option.appendChild(document.createTextNode(name));
+    if (name === example) {
+        option.setAttribute("selected", "");
+    }
     exampleSelector.appendChild(option);
 });
 
 var cache = {};
 
+// TODO: dry this code out
 function loadExample(name) {
     if (cache[name]) {
         var code = cache[name];
         editor.setValue(code, 1);
         output.setValue(to5.transform(code, options).code, 1);
+        editor.getSession().setScrollTop(0);
+        output.getSession().setScrollTop(0);
     } else {
         var path = "../examples/" + name + ".js";
 
@@ -103,19 +124,22 @@ function loadExample(name) {
             cache[name] = code;
             editor.setValue(code, 1);
             output.setValue(to5.transform(code, options).code, 1);
+            editor.getSession().setScrollTop(0);
+            output.getSession().setScrollTop(0);
         };
         xhr.open("GET", path, true);
         xhr.send();
     }
 }
 
-loadExample(examples[0]);
+loadExample(example);
 
 exampleSelector.addEventListener("change", function (e) {
     var value = exampleSelector.value;
 
     if (value[0] !== "-") {
         loadExample(value);
+        localStorage.example = value;
     } else {
         return false;
     }
@@ -134,7 +158,7 @@ exampleSelector.addEventListener("change", function (e) {
 //    }
 //});
 
-editor.getSession().on("change", function () {
+var runCode = function () {
     try {
         var code = editor.getSession().getValue();
         var transformedCode = to5.transform(code, options).code;
@@ -154,6 +178,12 @@ editor.getSession().on("change", function () {
         // TODO: show error message in console
         console.log(e.message);
     }
+};
+
+editor.getSession().on("change", function () {
+    if (autorun) {
+        runCode();
+    }
 });
 
 
@@ -171,8 +201,22 @@ Object.defineProperty(settings, "fontSize", {
     }
 });
 
+Object.defineProperty(settings, "autorun", {
+    get: function () {
+        return autorun;
+    },
+    set: function (value) {
+        autorun = value;
+        localStorage.autorun = value;
+        if (autorun) {
+            runCode();
+        }
+    }
+});
+
 var gui = new dat.GUI();
 gui.close();
 gui.add(settings, "fontSize", 10, 40).step(1);
+gui.add(settings, "autorun");
 
 

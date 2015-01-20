@@ -24,11 +24,18 @@ h1 {
 }
 
 #left, #right {
-    width:100%;
     display: flex;
     flex-direction: column;
     margin-left: 2px;
     margin-right: 2px;
+}
+
+#left {
+    width: 66%;
+}
+
+#right {
+    width: 33%;
 }
 
 .header {
@@ -47,6 +54,10 @@ h1 {
     flex-grow: 1;
 }
 
+#console {
+    overflow: hidden;
+}
+
 #title {
     font-size: 32px;
     font-family: sans-serif;
@@ -55,4 +66,12 @@ h1 {
 
 .ace_comment {
     color: whitesmoke !important;
+}
+
+.ace_fold {
+    background-color: #FF00FF !important;
+}
+
+.ace_scrollbar {
+    display: none !important;
 }
