@@ -72,10 +72,10 @@ var options = { loose: "classes", runtime: true, modules: "common" };
 
 // TODO: add configuartions to the examples for what it should show firts, whether it should evaluate or not
 
-var examples = [ 
-    "templating",
-    "arrow",
+var examples = [
     "let_const",
+    "arrow_functions",
+    "templating",
     "------",
     "destructuring",
     "rest",
@@ -91,7 +91,12 @@ var examples = [
     "iterators",
     "iterators_from_generators",
     "promises",
-    "generators_and_promises"
+    "generators_and_promises",
+    "------",
+    "combinator_basics_1",
+    "combinator_basics_2",
+    "partial_application",
+    "currying"
 ];
 
 var exampleSelector = document.querySelector("#exampleSelector");
@@ -177,6 +182,7 @@ var runCode = function () {
         consoleEmulator.clear();
         // TODO: show error message in console
         console.log(e.message);
+        consoleEmulator.printError(e.message);
     }
 };
 

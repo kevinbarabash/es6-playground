@@ -7,6 +7,7 @@ console.log(odd);
 var oddSum = numbers
     .filter(num => num % 2)
     .reduce((total, val) => total + val);
+
 console.log(`oddSum = ${oddSum}`);
 
 numbers.forEach((value, index) => {

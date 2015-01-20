@@ -65,7 +65,7 @@ h1 {
 }
 
 .ace_comment {
-    color: whitesmoke !important;
+    /*color: whitesmoke !important;*/
 }
 
 .ace_fold {

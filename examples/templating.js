@@ -1,7 +1,7 @@
 var arch_nemesis = "Newman";
 console.log(`Jerry: Hello, ${arch_nemesis}`);
 
-canvas.addEventListener('click', function (e) {
+canvas.addEventListener('click', e => {
     console.log(`click @ (${e.pageX}, ${e.pageY})`);
 });
 
