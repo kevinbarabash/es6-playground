@@ -91,8 +91,7 @@ var examples = [
     "classes",
     "inheritance", 
     "event_handlers",
-    // TODO: jquery example
-    // TODO: rxjs example
+    "rxjs",
     "------",
     "modules_1",
     "modules_2",
