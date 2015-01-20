@@ -2,98 +2,57 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>ES6 Playground</title>
-    <style>
-
-        .container {
-            width: 50%;
-            float: left;
-            box-sizing: border-box;
-        }
-        
-        #es6-container {
-            border-right: solid 5px transparent;
-        }
-        
-        #es5-container {
-            border-left: solid 5px transparent;
-        }
-        
-        #editor, #output {
-            height: 600px;
-            border: solid 1px #999;
-        }
-
-        .ace_editor {
-            font-size: 1em !important;
-        }
-        
-        #wrapper {
-            margin: auto;
-            padding: 0 50px;
-        }
-      
-        h1, h2, h3 {
-            font-family: sans-serif;
-        }
-    </style>
+    <title></title>
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="consemu/dist/consemu.css"/>
+    <script src="6to5/browser.js"></script>
+    <script src="6to5/runtime.js"></script>
+    <script src="6to5/browser-polyfill.js"></script>
+    <script src="ace/src-min-noconflict/ace.js"></script>
+    <script src="consemu/dist/consemu.js"></script>
+    <script src="dat-gui/build/dat.gui.min.js"></script>
+    <script src="esprima.js"></script>
+    <script src="escope.js"></script>
+    <script src="q.js"></script>
+    <script src="index.js" async></script>
 </head>
 <body>
 
 <div id="wrapper">
-    <h1>ES6 Playground</h1>
-
-    <div id="es6-container" class="container">
-        <h2>ES6</h2>
-        <div id="editor"></div>
+    <div id="title" class="header">
+        <b>ES6</b> playground
     </div>
-    
-    <div id="es5-container" class="container">
-        <h2>ES5</h2>
-        <div id="output"></div>
 
+    <div id="container">
+
+        <div id="left">
+            <div class="header">
+                <select id="exampleSelector"></select>
+            </div>
+            <div class="content">
+                <div id="editor"></div>
+            </div>
+        </div>
+        
+        <div id="right">
+            <div class="header">
+                <select id="leftSelector">
+                    <option value="console">console</option>
+                    <option value="output">compiled code</option>
+                    <option value="canvas">canvas</option>
+                </select>
+            </div>
+            <div class="content">
+                <div id="console" class="consemu"></div>
+                <div id="output" style="display:none;"></div>
+                <div id="canvas" style="display:none;">
+                    <canvas></canvas>
+                </div>
+            </div>
+        </div>
+       
     </div>
 </div>
 
 </body>
 </html>
-<script src="browser.js"></script>
-<script src="ace/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-<script>
-
-    var editor = ace.edit("editor");
-
-    editor.setTheme("ace/theme/chrome");
-    editor.setHighlightActiveLine(false);
-    editor.getSession().setMode("ace/mode/javascript");
-
-    var output = ace.edit("output");
-
-    output.setTheme("ace/theme/chrome");
-    output.setHighlightActiveLine(false);
-    output.getSession().setMode("ace/mode/javascript");
-    output.setReadOnly(true);
-    
-    var xhr = new XMLHttpRequest();
-    // TODO: error checking
-    xhr.onload = function () {
-        var code = xhr.responseText;
-        editor.setValue(code);
-        output.setValue(to5.transform(code).code);
-    };
-    xhr.open("GET", "examples/00_readable.js", true);
-    xhr.send();
-
-    editor.getSession().on("changeAnnotation", function(){
-
-        var annot = editor.getSession().getAnnotations();
-        var noErrors = annot.every(function(annot) {
-            return annot.type !== "error";
-        });
-        
-        if (noErrors) {
-            var code = editor.getSession().getValue();
-            output.setValue(to5.transform(code).code);
-        }
-    });
-</script>
