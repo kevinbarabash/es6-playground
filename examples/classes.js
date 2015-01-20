@@ -1,7 +1,6 @@
 class User {
     constructor(firstName = "John", lastName = "Doe") {
-        this.firstName = firstName;
-        this.lastName = lastName;
+        Object.assign(this, { firstName, lastName });
     }
 
     get fullName() {

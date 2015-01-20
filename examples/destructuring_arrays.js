@@ -3,13 +3,6 @@ var [x,y,z] = point;
 
 console.log(`x = ${x}, y = ${y}, z = ${z}`);
 
-var size = { width: 100, height: 50 };
-var { width, height } = size;
-console.log(`width = ${width}, height = ${height}`);
-
-var { width: w, height: h } = size;
-console.log(`w = ${w}, h = ${h}`);
-
 function print_range(min, max) {
     if (min > max) {
         [min, max] = [max, min];

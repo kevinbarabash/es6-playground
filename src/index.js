@@ -77,11 +77,17 @@ var examples = [
     "arrow_functions",
     "templating",
     "------",
-    "destructuring",
+    "destructuring_objects",
+    "destructuring_arrays",
     "rest",
     "spread",
+    "objects",
     "------",
-    "classes", 
+    "for_of",
+    "map",
+    "set",
+    "------",
+    "classes",
     "inheritance", 
     "event_handlers",
     // TODO: jquery example
@@ -269,6 +275,5 @@ Object.defineProperty(settings, "fontSize", {
 var gui = new dat.GUI();
 gui.close();
 gui.add(settings, "fontSize", 10, 40).step(1);
-gui.add(settings, "autorun");
 
 

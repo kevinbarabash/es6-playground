@@ -17,3 +17,7 @@ while (!result.done) {
 }
 
 console.log(`final result = ${result.value}`);
+
+for (let value of genFunc(100)) {
+    console.log(value);
+}
