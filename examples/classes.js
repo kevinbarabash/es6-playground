@@ -1,3 +1,5 @@
+// classes
+
 class User {
     constructor(firstName = "John", lastName = "Doe") {
         Object.assign(this, { firstName, lastName });

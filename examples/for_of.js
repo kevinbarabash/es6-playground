@@ -1,3 +1,5 @@
+// for of
+
 var array = [1, 2, 3];
 
 for (let i of array) {

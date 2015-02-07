@@ -1,3 +1,5 @@
+// generator basics
+
 var genFunc = function* (start) {
     var i = start;
 

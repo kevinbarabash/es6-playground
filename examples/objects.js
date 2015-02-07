@@ -1,3 +1,5 @@
+// objects
+
 var propName = "y";
 
 var obj = {

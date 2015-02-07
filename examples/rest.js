@@ -1,3 +1,5 @@
+// rest
+
 function createBlogPost(title, content, ...tags) {
     console.log("title = " + title);
     console.log("content = " + content);

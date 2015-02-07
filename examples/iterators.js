@@ -1,3 +1,5 @@
+// iterators
+
 let fibonacci = {
     [Symbol.iterator]() {
         let pre = 0, cur = 1;
