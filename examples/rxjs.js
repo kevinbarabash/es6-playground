@@ -17,7 +17,7 @@ function random(max) {
 var randomColor = function() {
     var [r,g,b] = [255,255,255].map(random);
     return `rgb(${r}, ${g}, ${b})`;
-}
+};
 
 function drawLine(p1, p2) {
     ctx.beginPath();

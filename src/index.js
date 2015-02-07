@@ -73,11 +73,12 @@ var options = { loose: "classes", runtime: true, modules: "common" };
 // TODO: add configuartions to the examples for what it should show firts, whether it should evaluate or not
 
 var examples = [
+    "templating",
     "let_const",
     "arrow_functions",
-    "templating",
-    "objects",
     "symbols",
+    "objects",
+    "default_parameters",
     "------",
     "destructuring_objects",
     "destructuring_arrays",
@@ -112,16 +113,15 @@ var examples = [
 ];
 
 var defaultOptions = {
-    split: 'left',   // favor left size 66% to 33%
     evaluate: true,
     update: true
 };
 
 var exampleOptions = {
-    modules_1: { split: 'even', evaluate: false },
-    modules_2: { split: 'even', evaluate: false },
-    modules_3: { split: 'even', evaluate: false },
-    modules_4: { split: 'even', evaluate: false },
+    modules_1: { evaluate: false },
+    modules_2: { evaluate: false },
+    modules_3: { evaluate: false },
+    modules_4: { evaluate: false },
     promises: { update: false },
     generators_and_promises: { update: false }
 };
@@ -129,7 +129,6 @@ var exampleOptions = {
 // destructuring would be useful
 var evaluate = defaultOptions.evaluate;
 var update = defaultOptions.update;
-var split = defaultOptions.split;
 
 var exampleSelector = document.querySelector("#exampleSelector");
 
@@ -156,7 +155,6 @@ var rightColumn = document.querySelector("#right");
 function loadExample(name) {
     evaluate = defaultOptions.evaluate;
     update = defaultOptions.update;
-    split = defaultOptions.split;
     
     var options = exampleOptions[name];
     if (options) {
@@ -166,23 +164,12 @@ function loadExample(name) {
         if (options.hasOwnProperty("update")) {
             update = options.update;
         }
-        if (options.hasOwnProperty("split")) {
-            split = options.split;
-        }
     }
 
     if (evaluate && !update) {
         runButton.style.display = "inline";
     } else {
         runButton.style.display = "none";
-    }
-    
-    if (split === "left") {
-        leftColumn.style.width = "66%";
-        rightColumn.style.width = "33%";
-    } else if (split === "even") {
-        leftColumn.style.width = "50%";
-        rightColumn.style.width = "50%";
     }
     
     if (cache[name]) {
@@ -277,3 +264,26 @@ gui.close();
 gui.add(settings, "fontSize", 10, 40).step(1);
 
 
+
+var divider = document.querySelector("#divider");
+var grabbed = false;
+divider.addEventListener("mousedown", function () {
+    grabbed = true;
+});
+document.addEventListener("mousemove", function (e) {
+    if (grabbed) {
+        e.preventDefault();
+        var offsetLeft = leftColumn.offsetLeft;
+        var x = e.pageX - offsetLeft;
+        var totalWidth = leftColumn.offsetWidth + rightColumn.offsetWidth + 5;
+        var leftSize = 100 * (x / totalWidth);
+        var rightSize = 100 - leftSize;
+        leftColumn.style.width = leftSize.toFixed(3) + "%";
+        rightColumn.style.width = rightSize.toFixed(3) + "%";
+    }
+});
+document.addEventListener("mouseup", function () {
+    if (grabbed) {
+        grabbed = false;
+    } 
+});

@@ -1,7 +1,8 @@
 body, html {
     height: 100%;
+    width: 100%;
     margin: 0;
-    overflow: hidden;
+    overflow: auto;
 }
 
 h1 {
@@ -26,8 +27,13 @@ h1 {
 #left, #right {
     display: flex;
     flex-direction: column;
-    margin-left: 2px;
-    margin-right: 2px;
+}
+
+#divider {
+    display: flex;
+    flex-direction: column;
+    width: 5px;
+    cursor: col-resize;
 }
 
 #left {

@@ -1,6 +1,10 @@
 var numbers = [1,2,3,4,5,6];
 console.log(numbers);
 
+numbers.forEach((value, index) => {
+    console.log(`a[${index}] = ${value}`);
+});
+
 var odd = numbers.filter(num => num % 2);
 console.log(odd);
 
@@ -10,6 +14,6 @@ var oddSum = numbers
 
 console.log(`oddSum = ${oddSum}`);
 
-numbers.forEach((value, index) => {
-    console.log(`a[${index}] = ${value}`);
-});
+setTimeout(() => {
+    console.log("run after returning control to the event loop");
+}, 0);

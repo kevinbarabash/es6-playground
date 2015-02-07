@@ -1,9 +1,12 @@
 var arch_nemesis = "Newman";
 console.log(`Jerry: Hello, ${arch_nemesis}`);
 
-canvas.addEventListener('click', e => {
-    console.log(`click @ (${e.pageX}, ${e.pageY})`);
-});
+for (var i = 0; i < 5; i++) {
+    console.log(`i = ${i}, i * i = ${i * i}`);
+}
+
+var p = { x:5, y:10 };
+console.log(`p = (${p.x}, ${p.y})`);
 
 function length(x, y) {
     return Math.sqrt(x * x + y * y);
