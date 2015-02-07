@@ -1,3 +1,5 @@
+// modules 2
+
 import { pi, e } from 'lib/math';
 
 export function foo() {

@@ -1,3 +1,5 @@
+// currying
+
 var bar = function (x,y,z) {
     console.log(`x * y * z = ${x * y * z}`);
     console.log(`bar was called with ${arguments.length} arguments`);

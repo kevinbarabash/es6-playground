@@ -1,3 +1,5 @@
+// promises
+
 function timeout(duration = 0) {
     if (duration > 1000) throw `${duration}ms is too long`;
     return new Promise((resolve, reject) => {

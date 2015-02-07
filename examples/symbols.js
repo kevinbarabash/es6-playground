@@ -1,3 +1,5 @@
+// symbols
+
 var firstMixin = {
     log: Symbol("log"),
     addLogging(obj) {

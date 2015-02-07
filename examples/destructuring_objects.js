@@ -1,3 +1,5 @@
+// destructuring objects
+
 var size = { width: 100, height: 50 };
 var { width, height } = size;
 console.log(`width = ${width}, height = ${height}`);

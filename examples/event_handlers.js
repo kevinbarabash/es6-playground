@@ -1,3 +1,5 @@
+// event handlers
+
 function random(max) {
     return max * Math.random() | 0;
 }

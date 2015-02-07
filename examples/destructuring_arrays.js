@@ -1,3 +1,5 @@
+// destructuring arrays
+
 var point = [0.5, 1.0, -0.67];
 var [x,y,z] = point;
 

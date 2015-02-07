@@ -1,3 +1,5 @@
+// partial application
+
 var sayHiFirst = function(fn, ...args) {
     console.log("hi!");
     fn(...args);

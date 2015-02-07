@@ -1,3 +1,5 @@
+// map
+
 var users = new Map();
 
 users.set("id_1", { name: "bob" });

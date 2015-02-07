@@ -1,3 +1,5 @@
+// inheritance
+
 class Square {
     constructor(x = 0, y = 0, size = 50) {
         [this.x, this.y] = [x, y];
