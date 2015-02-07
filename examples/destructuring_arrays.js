@@ -11,8 +11,3 @@ function print_range(min, max) {
 }
 
 print_range(10, -8);
-
-var list = [[1, "aardvark"], [2, "bear"], [3, "chimp"]];
-for (var [id, animal] of list) {
-    console.log(`${animal}'s id is ${id}`);
-}
