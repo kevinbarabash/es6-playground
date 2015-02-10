@@ -47,22 +47,28 @@ canvas.addEventListener = function(type, listener) {
 var leftSelector = document.querySelector("#leftSelector");
 leftSelector.addEventListener("change", function (e) {
     var value = leftSelector.value;
-    
-    var console = document.querySelector("#console");
-    var output = document.querySelector("#output");
+
+    var consoleElement = document.querySelector("#console");
+    var outputElement = document.querySelector("#output");
     var canvasElement = document.querySelector("#canvas");
 
-    [console, output, canvasElement].forEach(function (div) {
+    [consoleElement, outputElement, canvasElement].forEach(function (div) {
         div.style.display = "none";
     });
-    
+
     var dict = {
-        console: console,
-        output: output,
+        console: consoleElement,
+        output: outputElement,
         canvas: canvasElement
     };
-    
+
     dict[value].style.display = "block";
+
+    if (value === "output") {
+        var code = editor.getSession().getValue();
+        var transformedCode = to5.transform(code, options).code;
+        output.setValue(transformedCode, 1);
+    }
 });
 
 
@@ -76,9 +82,8 @@ var examples = [
     "templating",
     "let_const",
     "arrow_functions",
-    "symbols",
-    "objects",
     "default_parameters",
+    "symbols",
     "------",
     "destructuring_objects",
     "destructuring_arrays",
@@ -89,6 +94,7 @@ var examples = [
     "map",
     "set",
     "------",
+    "objects",
     "classes",
     "inheritance", 
     "event_handlers",
